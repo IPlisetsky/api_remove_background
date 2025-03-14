@@ -2,6 +2,9 @@ import requests
 import os
 
 
+if not os.path.exists("jpgs"):
+    os.makedirs("jpsgs")
+    
 dir = os.listdir("jpgs")
 
 for i in dir:
@@ -10,9 +13,11 @@ for i in dir:
             'https://api.remove.bg/v1.0/removebg',
             files={'image_file': open(fr"jpgs/{i}", 'rb')},
             data={'size': 'auto'},
-            headers={'X-Api-Key': 'jFMhwEJEMEkZ7DLCcB53jkYZ'},
+            headers={'X-Api-Key': ''},
         )
         if response.status_code == requests.codes.ok:
+            if not os.path.exists("pngs"):
+                os.makedirs("pngs")
             with open(fr"pngs/{i}", 'wb') as out:
                 out.write(response.content)
         else:
